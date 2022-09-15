@@ -1,0 +1,15 @@
+.nav_item {
+  text-transform: capitalize;
+  color: rgb(10, 9, 9);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-bottom: 3px solid transparent;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+@media (max-width: 900px) {
+  .nav_item {
+    font-size: 1rem;
+  }
+}
