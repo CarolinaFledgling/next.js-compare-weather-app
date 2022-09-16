@@ -1,11 +1,19 @@
 import React from "react";
 
-export const MainForm = (
-  isLoading: boolean,
-  valueInput: string,
-  handleChangeInput: () => void,
-  handleSubmitForm: () => void
-) => {
+interface MainFormProps {
+  inputError: boolean;
+  isLoading: boolean;
+  valueInput: string;
+  handleChangeInput: () => void;
+  handleSubmitForm: () => void;
+}
+
+export const MainForm = ({
+  isLoading,
+  valueInput,
+  handleChangeInput,
+  handleSubmitForm,
+}: MainFormProps) => {
   return (
     <form>
       <div className="form-group">

@@ -1,6 +1,16 @@
 import React from "react";
 
-export const SingleTemplate = ({ index, element, handleDeleteElement }) => {
+interface SingleTemplateProps {
+  index: number;
+  element: object = {};
+  handleDeleteElement: () => void;
+}
+
+export const SingleTemplate = ({
+  index,
+  element,
+  handleDeleteElement,
+}: SingleTemplateProps) => {
   return (
     <tr key={`elem-${index}`}>
       <td>{index + 1}.</td>

@@ -78,7 +78,7 @@ export default function MainContent() {
   }, []);
 
   const findCapital = (providedCountry: string) => {
-    
+
     const dataApi = dataCountriesApi?.data;
     //Find the value of the first element
     const foundCountry = dataApi?.find((item) => {
@@ -95,7 +95,7 @@ export default function MainContent() {
     return foundCountry?.capital;
   };
 
-  const handleSubmitForm = (e): void => {
+  const handleSubmitForm = (e: any,): void => {
     e.preventDefault();
 
     if (!valueInput) {

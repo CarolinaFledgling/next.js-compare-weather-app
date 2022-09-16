@@ -1,11 +1,18 @@
 import React from "react";
 
-export const ErrorMessages = (
-  inputError: boolean,
-  fetchError: boolean,
-  errorNotFoundCapita: boolean,
-  errorFoundTheSameCountry: boolean
-) => {
+interface ErrorMessagesProps {
+  inputError: boolean;
+  fetchError: boolean;
+  errorNotFoundCapita: boolean;
+  errorFoundTheSameCountry: boolean;
+}
+
+export const ErrorMessages = ({
+  inputError,
+  fetchError,
+  errorNotFoundCapita,
+  errorFoundTheSameCountry,
+}: ErrorMessagesProps) => {
   return (
     <>
       {inputError && <p>Please write the name of country </p>}
