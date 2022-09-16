@@ -1,10 +1,17 @@
+
+.content{
+  background-color: #fffffe;
+  width: 100%;
+
+}
+
 .title span {
   color: #0070f3;
   text-decoration: none;
 }
 
 .span {
-  border-bottom: 2px solid #0070f3;
+  border-bottom: 2px solid #ef4565;
 }
 
 .title {
