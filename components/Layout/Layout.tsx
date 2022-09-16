@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react'
+import Footer from '../Footer/Footer';
 import { NavBar } from '../NavBar/NavBar'
 
 interface Props {
@@ -11,6 +12,7 @@ const Layout = ({ children }: Props) => {
         <>
             <NavBar />
             {children}
+            <Footer/>
         </>
     )
 }
