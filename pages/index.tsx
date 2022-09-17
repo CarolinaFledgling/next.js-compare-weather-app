@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import HeaderSection from "../components/HeaderSection/HeaderSection";
@@ -30,7 +30,7 @@ export default function Home() {
   const [searchValueInput, setSearchValueInput] = useState("");
 
   //---------------------------------------------------------------------------//
-  const handleChangeInput = (e: any) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLElement>): void => {
     setValueInput(e.target.value);
   };
 
@@ -290,7 +290,10 @@ export default function Home() {
               <div className="container-search">
                 <SearchFormGroup setSearchValueInput={setSearchValueInput} />
                 {/* displaying search value */}
-                <SearchedValueView detailsDataList={detailsDataList} searchValueInput={searchValueInput}/>
+                <SearchedValueView
+                  detailsDataList={detailsDataList}
+                  searchValueInput={searchValueInput}
+                />
               </div>
             </div>
           </form>
@@ -299,5 +302,3 @@ export default function Home() {
     </div>
   );
 }
-
-
