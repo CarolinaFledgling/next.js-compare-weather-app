@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import HeaderSection from "../components/HeaderSection/HeaderSection";
@@ -10,9 +10,41 @@ import { SubmitFormGroup } from "../components/SubmitFormGroup/SubmitFormGroup";
 import { SearchFormGroup } from "../components/SearchFormGroup/SearchFormGroup";
 import { SearchedValueView } from "../components/SearchedValueView/SearchedValueView";
 
+interface DataCountryItem {
+  name: string;
+  capital: string;
+}
+
+type DataCountryArray = Array<DataCountryItem>;
+
+interface DataCountry {
+  error: boolean;
+  msg: string;
+  data: DataCountryArray;
+}
+
+interface WeatherItem {
+  main: string;
+}
+
+interface DataWeather {
+  weather: WeatherItem[];
+}
+
+interface DetailsDataItem {
+  country: string;
+  capital: string;
+  weather: string[];
+  id: string;
+}
+
+type DetailsDataList = DetailsDataItem[];
+
 export default function Home() {
   const [valueInput, setValueInput] = useState("");
-  const [dataCountriesApi, setDataCountriesApi] = useState([]);
+  const [dataCountriesApi, setDataCountriesApi] = useState<
+    DataCountry | undefined
+  >(undefined);
   const [error, setError] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [errorNotFoundCapita, setErrorNotFoundCapital] = useState(false);
@@ -22,19 +54,21 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaveLoading, setIsSaveLoading] = useState(false);
   // Array of country , capital , weather Info
-  const [detailsDataList, setDetailsDataList] = useState([]);
+  const [detailsDataList, setDetailsDataList] = useState<DetailsDataList>([]);
   // Edit functionality
   const [inputSaveValue, setInputSaveValue] = useState("");
-  const [savedIdEditElement, setSavedIDEditElement] = useState(false);
+  const [savedIdEditElement, setSavedIDEditElement] = useState<
+    string | undefined
+  >(undefined);
   // Search
   const [searchValueInput, setSearchValueInput] = useState("");
 
   //---------------------------------------------------------------------------//
-  const handleChangeInput = (e: ChangeEvent<HTMLElement>): void => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValueInput(e.target.value);
   };
 
-  const handleSave = (e: any) => {
+  const handleSave = (e: ChangeEvent<HTMLInputElement>): void => {
     setInputSaveValue(e.target.value);
   };
 
@@ -46,7 +80,8 @@ export default function Home() {
         }
         return res.json();
       })
-      .then((data) => {
+      .then((data: DataCountry) => {
+        console.log("data from getCapital", data);
         setDataCountriesApi(data);
       })
       .catch((err) => {
@@ -54,7 +89,10 @@ export default function Home() {
         setFetchError(true);
       });
   };
-  const getWeather = (foundCapitalElement: string, dataCallback) => {
+  const getWeather = (
+    foundCapitalElement: string,
+    dataCallback: (weatherDetails: string[]) => void
+  ) => {
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${foundCapitalElement}&appid=${process.env.NEXT_PUBLIC_WEATHERAPI}`
     )
@@ -64,12 +102,8 @@ export default function Home() {
         }
         return res.json();
       })
-      .then((data) => {
-        console.log("weatherDataApi details: ", {
-          data,
-          dataName: data.name,
-          dataWeather: data.weather,
-        });
+      .then((data: DataWeather) => {
+        console.log("weatherDataApi details fetch: ", data);
         const weatherDetails = data.weather.map((detail) => {
           return detail.main;
         });
@@ -108,7 +142,7 @@ export default function Home() {
     return foundCountry?.capital;
   };
 
-  const handleSubmitForm = (e: any) => {
+  const handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
 
     if (!valueInput) {
@@ -146,7 +180,7 @@ export default function Home() {
     // Second API to get Weather info
     if (foundCapitalElement) {
       getWeather(foundCapitalElement, (weatherDetails) => {
-        const newElementDetail = {
+        const newElementDetail: DetailsDataItem = {
           country: valueInput,
           capital: foundCapitalElement,
           weather: weatherDetails,
@@ -165,7 +199,7 @@ export default function Home() {
   console.log("detailsDataList", detailsDataList);
 
   // DELETING ELEMENT
-  const handleDeleteElement = (e: any, id) => {
+  const handleDeleteElement = (e: any, id: string) => {
     e.preventDefault();
 
     const filteredElement = detailsDataList.filter((elem) => {
@@ -191,7 +225,7 @@ export default function Home() {
     setSavedIDEditElement(id);
   };
 
-  const handlerChangeSaveEditing = (e) => {
+  const handlerChangeSaveEditing = (e: Event) => {
     e.preventDefault();
 
     setIsSaveLoading(true);
@@ -202,7 +236,11 @@ export default function Home() {
 
     console.log("findElement w Edit", findElement);
 
-    findElement.country = inputSaveValue;
+    if (findElement) {
+      findElement.country = inputSaveValue;
+    } else {
+      return;
+    }
 
     // if we use react.Memo
     // const editedElement = {
@@ -218,10 +256,12 @@ export default function Home() {
     // Second API to get Weather info
     if (foundCapitalElement) {
       getWeather(foundCapitalElement, (weatherDetails) => {
-        findElement.weather = weatherDetails;
-        findElement.capital = foundCapitalElement;
+        if (findElement) {
+          findElement.weather = weatherDetails;
+          findElement.capital = foundCapitalElement;
+        }
 
-        setSavedIDEditElement(null);
+        setSavedIDEditElement(undefined);
         setDetailsDataList([...detailsDataList]);
       });
     }
@@ -251,6 +291,7 @@ export default function Home() {
                 <div>
                   <table>
                     <tbody>
+                      {/* Create an interface for detailsDataList */}
                       {detailsDataList.map((element, index) => {
                         return (
                           <div key={index}>

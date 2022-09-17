@@ -1,10 +1,17 @@
 import React from "react";
 
+interface Element {
+  country: string;
+  capital: string;
+  weather: string;
+  id: string;
+}
+
 interface SingleTemplateProps {
   index: number;
-  element: object;
-  handleDeleteElement: () => void;
-  handleEditClick: () => void;
+  element: Element;
+  handleDeleteElement: (e: any, id: string) => void;
+  handleEditClick: (e: any, element: Element, id: string) => void;
 }
 
 export const SingleTemplate = ({
