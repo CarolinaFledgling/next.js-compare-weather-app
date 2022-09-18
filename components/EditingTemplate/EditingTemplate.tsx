@@ -23,7 +23,7 @@ export const EditingTemplate = ({
     <tr key={`elem-${index}`}>
       <td>{index + 1}.</td>
       <td>
-        <label className="label-edit" htmlFor="input-name">
+        <label htmlFor="input-name">
           &nbsp;Edited: &nbsp;
         </label>
       </td>
