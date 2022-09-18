@@ -9,9 +9,10 @@ export const SearchFormGroup = ({
 }: SearchFormGroupProps) => {
   return (
     <div className="form-group">
-      <label htmlFor="country-search"> Search Country: </label>
+      <label className="label" htmlFor="country-search"> Find Country in the List: </label>
       <input
-        placeholder="search..."
+      className="input"
+        placeholder="Poland"
         type="text"
         id="country-search"
         onChange={handleSearchElement}

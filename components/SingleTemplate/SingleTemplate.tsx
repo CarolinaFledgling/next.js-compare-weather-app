@@ -26,12 +26,16 @@ export const SingleTemplate = ({
       <td>{element.country}</td>
       <td>{element.capital}</td>
       <td>{element.weather}</td>
-      <button onClick={(e) => handleDeleteElement(e, element.id)}>
-        Delete
-      </button>
-      <button onClick={(e) => handleEditClick(e, element, element.id)}>
-        Edit
-      </button>
+      <td>
+        <button className="btn-delete" onClick={(e) => handleDeleteElement(e, element.id)}>
+          Delete
+        </button>
+      </td>
+      <td>
+        <button className="btn-edit" onClick={(e) => handleEditClick(e, element, element.id)}>
+          Edit
+        </button>
+      </td>
     </tr>
   );
 };

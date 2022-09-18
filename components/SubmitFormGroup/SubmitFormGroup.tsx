@@ -1,9 +1,9 @@
-import React,{ChangeEvent} from "react";
+import React, { ChangeEvent } from "react";
 
 interface SubmitFormGroupProps {
   isLoading: boolean;
   valueInput: string;
-  handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void
+  handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const SubmitFormGroup = ({
@@ -13,8 +13,12 @@ export const SubmitFormGroup = ({
 }: SubmitFormGroupProps) => {
   return (
     <div className="form-group">
-      <label htmlFor="country"> Enter Country:</label>
+      <label className="label" htmlFor="country">
+        Enter Country:
+      </label>
       <input
+        placeholder="Poland"
+        className="input"
         disabled={isLoading}
         type="text"
         id="country"

@@ -246,11 +246,10 @@ export default function Home() {
       return;
     }
 
-    console.log("findElement w Edit", findElement);
+    //console.log("findElement w Edit", findElement);
 
     const foundCapitalElement = findCapital(inputSaveValue);
 
-    // Second API to get Weather info
     // Second API to get Weather info
     if (foundCapitalElement) {
       getWeather(foundCapitalElement, (weatherDetails) => {
@@ -276,23 +275,39 @@ export default function Home() {
         <HeaderSection />
         <section className={styles.main}>
           <form>
-            <div className="container">
-              <div>
-                <SubmitFormGroup
-                  isLoading={isLoading}
-                  valueInput={valueInput}
-                  handleChangeInput={handleChangeInput}
-                />
-                <button disabled={isLoading} onClick={handleSubmitForm}>
-                  {isLoading ? "Loading..." : "Add to the List"}
-                </button>
+            <div>
+              <div className="container-app">
+                <div className="header-app">
+                  <div className="header-submit-wrapper">
+                    <SubmitFormGroup
+                      isLoading={isLoading}
+                      valueInput={valueInput}
+                      handleChangeInput={handleChangeInput}
+                    />
+                    <button
+                      className="btn-submit"
+                      disabled={isLoading}
+                      onClick={handleSubmitForm}
+                    >
+                      {isLoading ? "Loading..." : "Add to the List"}
+                    </button>
+                  </div>
+                  <SearchFormGroup handleSearchElement={handleSearchElement} />
+                </div>
                 <div>
                   <table>
                     <tbody>
-                      {/* Create an interface for detailsDataList */}
+                      <tr>
+                        <th>Number</th>
+                        <th>Country</th>
+                        <th>Capital</th>
+                        <th>Weather</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
+                      </tr>
                       {detailsDataList.map((element, index) => {
                         return (
-                          <div key={index}>
+                          <>
                             {savedIdEditElement === element.id ? (
                               <EditingTemplate
                                 isSaveLoading={isSaveLoading}
@@ -312,7 +327,7 @@ export default function Home() {
                                 handleEditClick={handleEditClick}
                               />
                             )}
-                          </div>
+                          </>
                         );
                       })}
                     </tbody>
@@ -325,10 +340,8 @@ export default function Home() {
                   errorFoundTheSameCountry={errorFoundTheSameCountry}
                 />
               </div>
-              <></>
+
               <div className="container-search">
-                <SearchFormGroup handleSearchElement={handleSearchElement} />
-                {/* displaying search value */}
                 <SearchedValueView
                   detailsDataList={detailsDataList}
                   searchValueInput={searchValueInput}

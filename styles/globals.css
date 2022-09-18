@@ -24,3 +24,113 @@ a {
     background: black;
   }
 }
+
+/* Table test style */
+
+.App {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  color: #094067;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+  font-family: Roboto sans-serif;
+  max-width: 500px;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+th {
+  border-bottom: 0.1px solid #094067;
+  text-align: center;
+  padding: 0.5rem;
+  text-transform: uppercase;
+}
+
+td {
+  color: #094067;
+  text-align: center;
+  padding: 1rem;
+}
+
+button {
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  padding: 5px 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  border: none;
+  text-transform: uppercase;
+}
+
+.btn-submit {
+  background-color: #3da9fc;
+  margin-top: 1rem;
+  padding: 10px 20px;
+}
+
+.btn-delete {
+  background-color: #ef4565;
+}
+
+.btn-edit {
+  background-color: #094067;
+}
+
+.container-app {
+  padding: 1rem;
+}
+
+.header-app {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header-submit-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.input {
+  display: block;
+  width: 100%;
+
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 6px;
+  margin-top: 10px;
+}
+
+.input:focus {
+  outline: 1px solid rgb(221, 182, 10);
+}
+
+.label {
+  display: block;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  color: #094067;
+  font-weight: 700;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.label-edit {
+  display: block;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  color: #094067;
+  font-weight: 700;
+}
