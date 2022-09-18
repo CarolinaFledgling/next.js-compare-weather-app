@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ChangeEvent, FormEvent } from "react";
 
 interface EditingTemplateProps {
   inputSaveValue: string;
-  handleSave: () => void;
-  handlerChangeSaveEditing: () => void;
+  handleSave: (e: ChangeEvent<HTMLInputElement>) => void;
+  handlerChangeSaveEditing: (e: FormEvent) => void;
   index: number;
   element: {
     country: string;

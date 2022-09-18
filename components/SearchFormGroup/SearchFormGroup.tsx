@@ -1,11 +1,11 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
 interface SearchFormGroupProps {
-  //setSearchValueInput: Dispatch<SetStateAction<string>>;
+  handleSearchElement: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const SearchFormGroup = ({
-  setSearchValueInput,
+  handleSearchElement,
 }: SearchFormGroupProps) => {
   return (
     <div className="form-group">
@@ -14,9 +14,7 @@ export const SearchFormGroup = ({
         placeholder="search..."
         type="text"
         id="country-search"
-        onChange={(event) => {
-          setSearchValueInput(event.target.value);
-        }}
+        onChange={handleSearchElement}
       />
     </div>
   );

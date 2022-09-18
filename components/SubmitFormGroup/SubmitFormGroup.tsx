@@ -1,9 +1,9 @@
-import React from "react";
+import React,{ChangeEvent} from "react";
 
 interface SubmitFormGroupProps {
   isLoading: boolean;
   valueInput: string;
-  handleChangeInput: (e: any) => void;
+  handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const SubmitFormGroup = ({

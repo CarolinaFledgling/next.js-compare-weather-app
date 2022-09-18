@@ -1,8 +1,17 @@
 import React from "react";
+interface DetailsDataItem {
+  country: string;
+  capital: string;
+  weather: string[];
+  id: string;
+}
+
+type DetailsDataList = DetailsDataItem[];
+
 
 interface SearchedValueViewProps {
-  detailsDataList: never[];
-  searchValueInput: string;
+  detailsDataList: DetailsDataList;
+  searchValueInput: string ;
 }
 
 export const SearchedValueView = ({
@@ -16,7 +25,7 @@ export const SearchedValueView = ({
           if (searchValueInput == "") {
             return false;
           } else if (
-            value.country.toLowerCase().includes(searchValueInput.toLowerCase())
+            value.country.toLowerCase().includes(searchValueInput?.toLowerCase())
           ) {
             return true;
           }

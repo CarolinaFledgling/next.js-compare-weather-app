@@ -3,7 +3,7 @@ import React from "react";
 interface Element {
   country: string;
   capital: string;
-  weather: string;
+  weather: string[];
   id: string;
 }
 

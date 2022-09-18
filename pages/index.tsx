@@ -72,6 +72,10 @@ export default function Home() {
     setInputSaveValue(e.target.value);
   };
 
+  const handleSearchElement = (e: ChangeEvent<HTMLInputElement>): void => {
+    setSearchValueInput(e.target.value);
+  };
+
   const getCapital = () => {
     fetch("https://countriesnow.space/api/v0.1/countries/capital")
       .then((res) => {
@@ -215,7 +219,7 @@ export default function Home() {
 
   // EDITING ELEMENT
 
-  const handleEditClick = (e, element, id) => {
+  const handleEditClick = (e: Event, element: DetailsDataItem, id: string) => {
     e.preventDefault();
     console.log("Edit id", id);
     console.log("Edit element", element);
@@ -225,7 +229,7 @@ export default function Home() {
     setSavedIDEditElement(id);
   };
 
-  const handlerChangeSaveEditing = (e: Event) => {
+  const handlerChangeSaveEditing = (e: FormEvent) => {
     e.preventDefault();
 
     setIsSaveLoading(true);
@@ -241,12 +245,6 @@ export default function Home() {
     } else {
       return;
     }
-
-    // if we use react.Memo
-    // const editedElement = {
-    //     ...findElement,
-    //     country: inputSaveValue
-    // }
 
     console.log("findElement w Edit", findElement);
 
@@ -329,7 +327,7 @@ export default function Home() {
               </div>
               <></>
               <div className="container-search">
-                <SearchFormGroup setSearchValueInput={setSearchValueInput} />
+                <SearchFormGroup handleSearchElement={handleSearchElement} />
                 {/* displaying search value */}
                 <SearchedValueView
                   detailsDataList={detailsDataList}
