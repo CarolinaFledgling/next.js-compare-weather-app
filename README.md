@@ -22,7 +22,7 @@ Clone the project
 
 ```bash
 
-  cd frontend_portfolio
+
   # Install dependencies
   npm install
   # to start the frontend locally
