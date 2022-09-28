@@ -3,7 +3,7 @@ import { SingleTemplate } from "../SingleTemplate/SingleTemplate";
 
 export const TableDetails = (
   detailsDataList: never[],
-  handleDeleteElement: (e: any, id: number) => void
+  handleDeleteElement: (e: any, id: string) => void
 ) => {
   return (
     <table>

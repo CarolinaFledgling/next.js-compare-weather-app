@@ -1,12 +1,17 @@
 # Next.js Compare Weather Tool
 
-This project was created as a separate project from the last task from : [link](https://github.com/CarolinaFledgling/next.js-rest-api-tasks) project.
+ My small personal project which allows me to monitor and compare weather from multiple countries and their capitals. 
+ I fetch data from two separate api services to achieve that. and I present data in the table.
+ Added ability for editing entered countries and deleting them from the table.  
 
-The goal of this project is to practice Typescript through a real project.
 
-The project allows users to monitor and compare weather from multiple countries and their capitals. Displaying them in Table format with ability for editing entered countries and deleting them from the table.
+# The goal of the project
 
-I fetch data from two separate api services to achieve that and practice working with REST API.
+- learn using Typescript by own small project
+- practice working with REST API
+- practice CRUD operation in React
+
+
 
 ## Status
 

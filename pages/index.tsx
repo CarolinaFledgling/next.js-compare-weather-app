@@ -9,6 +9,7 @@ import { ErrorMessages } from "../components/ErrorMessages/ErrorMessages";
 import { SubmitFormGroup } from "../components/SubmitFormGroup/SubmitFormGroup";
 import { SearchFormGroup } from "../components/SearchFormGroup/SearchFormGroup";
 import { SearchedValueView } from "../components/SearchedValueView/SearchedValueView";
+import { useGetCapital } from "../utility/getCapital";
 
 interface DataCountryItem {
   name: string;
@@ -42,9 +43,7 @@ type DetailsDataList = DetailsDataItem[];
 
 export default function Home() {
   const [valueInput, setValueInput] = useState("");
-  const [dataCountriesApi, setDataCountriesApi] = useState<
-    DataCountry | undefined
-  >(undefined);
+
   const [error, setError] = useState(false);
   const [fetchError, setFetchError] = useState(false);
   const [errorNotFoundCapita, setErrorNotFoundCapital] = useState(false);
@@ -63,6 +62,12 @@ export default function Home() {
   // Search
   const [searchValueInput, setSearchValueInput] = useState("");
 
+  const {
+    data: dataCountriesApi,
+    isError: isCapitalFetchError,
+    isLoading: isCapitalLoading,
+  } = useGetCapital();
+
   //---------------------------------------------------------------------------//
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>): void => {
     setValueInput(e.target.value);
@@ -76,23 +81,6 @@ export default function Home() {
     setSearchValueInput(e.target.value);
   };
 
-  const getCapital = () => {
-    fetch("https://countriesnow.space/api/v0.1/countries/capital")
-      .then((res) => {
-        if (!res.ok) {
-          throw Error("Could not fetch data");
-        }
-        return res.json();
-      })
-      .then((data: DataCountry) => {
-        console.log("data from getCapital", data);
-        setDataCountriesApi(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setFetchError(true);
-      });
-  };
   const getWeather = (
     foundCapitalElement: string,
     dataCallback: (weatherDetails: string[]) => void
@@ -124,10 +112,6 @@ export default function Home() {
         setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    getCapital();
-  }, []);
 
   const findCapital = (providedCountry: string) => {
     const dataApi = dataCountriesApi?.data;
@@ -273,83 +257,93 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <HeaderSection />
-        <section className={styles.main}>
-          <form>
-            <div>
-              <div className="container-app">
-                <div className="header-app">
-                  <div className="header-submit-wrapper">
-                    <SubmitFormGroup
-                      isLoading={isLoading}
-                      valueInput={valueInput}
-                      handleChangeInput={handleChangeInput}
-                    />
-                    <button
-                      className="btn-submit"
-                      disabled={isLoading}
-                      onClick={handleSubmitForm}
-                    >
-                      {isLoading ? "Loading..." : "Add to the List"}
-                    </button>
-                  </div>
-                  <SearchFormGroup handleSearchElement={handleSearchElement} />
-                </div>
-                <div>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <th>Number</th>
-                        <th>Country</th>
-                        <th>Capital</th>
-                        <th>Weather</th>
-                        <th>Delete</th>
-                        <th>Edit</th>
-                      </tr>
-                      {detailsDataList.map((element, index) => {
-                        return (
-                          <>
-                            {savedIdEditElement === element.id ? (
-                              <EditingTemplate
-                                isSaveLoading={isSaveLoading}
-                                element={element}
-                                index={index}
-                                inputSaveValue={inputSaveValue}
-                                handleSave={handleSave}
-                                handlerChangeSaveEditing={
-                                  handlerChangeSaveEditing
-                                }
-                              />
-                            ) : (
-                              <SingleTemplate
-                                index={index}
-                                element={element}
-                                handleDeleteElement={handleDeleteElement}
-                                handleEditClick={handleEditClick}
-                              />
-                            )}
-                          </>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-                <ErrorMessages
-                  error={error}
-                  fetchError={fetchError}
-                  errorNotFoundCapita={errorNotFoundCapita}
-                  errorFoundTheSameCountry={errorFoundTheSameCountry}
-                />
-              </div>
 
-              <div className="container-search">
-                <SearchedValueView
-                  detailsDataList={detailsDataList}
-                  searchValueInput={searchValueInput}
-                />
+        {isCapitalFetchError || isCapitalLoading ? (
+          <>
+            {isCapitalLoading && "Loading capital data"}
+            {isCapitalFetchError && "Failed to load capital data"}
+          </>
+        ) : (
+          <section className={styles.main}>
+            <form>
+              <div>
+                <div className="container-app">
+                  <div className="header-app">
+                    <div className="header-submit-wrapper">
+                      <SubmitFormGroup
+                        isLoading={isLoading}
+                        valueInput={valueInput}
+                        handleChangeInput={handleChangeInput}
+                      />
+                      <button
+                        className="btn-submit"
+                        disabled={isLoading}
+                        onClick={handleSubmitForm}
+                      >
+                        {isLoading ? "Loading..." : "Add to the List"}
+                      </button>
+                    </div>
+                    <SearchFormGroup
+                      handleSearchElement={handleSearchElement}
+                    />
+                  </div>
+                  <div>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th>Number</th>
+                          <th>Country</th>
+                          <th>Capital</th>
+                          <th>Weather</th>
+                          <th>Delete</th>
+                          <th>Edit</th>
+                        </tr>
+                        {detailsDataList.map((element, index) => {
+                          return (
+                            <>
+                              {savedIdEditElement === element.id ? (
+                                <EditingTemplate
+                                  isSaveLoading={isSaveLoading}
+                                  element={element}
+                                  index={index}
+                                  inputSaveValue={inputSaveValue}
+                                  handleSave={handleSave}
+                                  handlerChangeSaveEditing={
+                                    handlerChangeSaveEditing
+                                  }
+                                />
+                              ) : (
+                                <SingleTemplate
+                                  index={index}
+                                  element={element}
+                                  handleDeleteElement={handleDeleteElement}
+                                  handleEditClick={handleEditClick}
+                                />
+                              )}
+                            </>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  <ErrorMessages
+                    error={error}
+                    fetchError={fetchError}
+                    errorNotFoundCapita={errorNotFoundCapita}
+                    errorFoundTheSameCountry={errorFoundTheSameCountry}
+                  />
+                </div>
+
+                <div className="container-search">
+                  <SearchedValueView
+                    detailsDataList={detailsDataList}
+                    searchValueInput={searchValueInput}
+                  />
+                </div>
               </div>
-            </div>
-          </form>
-        </section>
+            </form>
+          </section>
+        )}
       </main>
     </div>
   );

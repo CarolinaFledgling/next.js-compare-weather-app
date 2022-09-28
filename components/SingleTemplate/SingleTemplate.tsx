@@ -11,7 +11,7 @@ interface SingleTemplateProps {
   index: number;
   element: Element;
   handleDeleteElement: (e: any, id: string) => void;
-  handleEditClick: (e: any, element: Element, id: string) => void;
+  handleEditClick?: (e: any, element: Element, id: string) => void;
 }
 
 export const SingleTemplate = ({
@@ -27,12 +27,20 @@ export const SingleTemplate = ({
       <td>{element.capital}</td>
       <td>{element.weather}</td>
       <td>
-        <button className="btn-delete" onClick={(e) => handleDeleteElement(e, element.id)}>
+        <button
+          className="btn-delete"
+          onClick={(e) => handleDeleteElement(e, element.id)}
+        >
           Delete
         </button>
       </td>
       <td>
-        <button className="btn-edit" onClick={(e) => handleEditClick(e, element, element.id)}>
+        <button
+          className="btn-edit"
+          onClick={(e) =>
+            handleEditClick && handleEditClick(e, element, element.id)
+          }
+        >
           Edit
         </button>
       </td>
